@@ -66,7 +66,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Item Name", "Item Description", "Phone Number"
+                "ID", "Item Name", "Item Description", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -220,7 +220,7 @@ public class Main extends javax.swing.JFrame {
             }
             else
             {
-                alert("Contact does not exist", "Update error");
+                alert("Menu Item does not exist", "Update error");
             }
         }
         else
