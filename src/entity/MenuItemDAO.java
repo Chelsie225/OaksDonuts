@@ -13,34 +13,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 /**
- *
+ * contact
  * @author Gokhan
  */
-public class ContactDAO implements DAO<Contact>
+public class MenuItemDAO implements DAO<MenuItem>
 {   
-    public ContactDAO() {
+    public MenuItemDAO() {
         
     }
-    List<Contact> contacts;
+    List<MenuItem> MenuItems;
     /**
-     * Get a single contact entity as a contact object
+     * Get a single MenuItem entity as a MenuItem object
      * @param id
      * @return 
      */
     @Override
-    public Optional<Contact> get(int id) {
+    public Optional<MenuItem> get(int id) {
         DB db = DB.getInstance();
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM Contact WHERE id = ?";
+            String sql = "SELECT * FROM MenuItem WHERE id = ?";
             PreparedStatement stmt = db.getPreparedStatement(sql);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
-            Contact contact = null;
+            MenuItem menuItem = null;
             while (rs.next()) {
-                contact = new Contact(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("phonenumber"));
+                MenuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
             }
-            return Optional.ofNullable(contact);
+            return Optional.ofNullable(MenuItem);
         } catch (SQLException ex) {
             System.err.println(ex.toString());
             return null;
@@ -48,23 +48,23 @@ public class ContactDAO implements DAO<Contact>
     }
     
     /**
-     * Get all contact entities as a List
+     * Get all MenuItem entities as a List
      * @return 
      */
     @Override
-    public List<Contact> getAll() {
+    public List<MenuItem> getAll() {
         DB db = DB.getInstance();
         ResultSet rs = null;
-        contacts = new ArrayList<>();
+        MenuItems = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM Contact ORDER BY id";
+            String sql = "SELECT * FROM MenuItem ORDER BY id";
             rs = db.executeQuery(sql);
-            Contact contact = null;
+            MenuItem menuItem = null;
             while (rs.next()) {
-                contact = new Contact(rs.getInt("id"), rs.getString("firstname"), rs.getString("lastname"), rs.getString("phonenumber"));
-                contacts.add(contact);
+                MenuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
+                MenuItems.add(MenuItem);
             }
-            return contacts;
+            return MenuItems;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
             return null;
@@ -72,23 +72,23 @@ public class ContactDAO implements DAO<Contact>
     }
     
     /**
-     * Insert a contact object into contact table
-     * @param contact 
+     * Insert a MenuItem object into MenuItem table
+     * @param MenuItem
      */
     @Override
-    public void insert(Contact contact)
+    public void insert(MenuItem menuItem)
     {
         DB db = DB.getInstance();
         try {
-            String sql = "INSERT INTO Contact(ID, firstName, lastName, phoneNumber) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO MenuItem(ID, itemName,itemdescription , price) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setInt(1, contact.getID());
-            stmt.setString(2, contact.getFirstName());
-            stmt.setString(3, contact.getLastName());
-            stmt.setString(4, contact.getPhoneNumber());
+            stmt.setInt(1, MenuItem.getID());
+            stmt.setString(2, MenuItem.getItemName());
+            stmt.setString(3, MenuItem.getItemDescription());
+            stmt.setString(4, MenuItem.getPrice());
             int rowInserted = stmt.executeUpdate();
             if (rowInserted > 0) {
-                System.out.println("A new contact was inserted successfully!");
+                System.out.println("A new MenuItem was inserted successfully!");
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -96,22 +96,22 @@ public class ContactDAO implements DAO<Contact>
     }
     
     /**
-     * Update a contact entity in database if it exists using a contact object
-     * @param contact
+     * Update a MenuItem entity in database if it exists using a MenuItem object
+     * @param MenuItem
      */
     @Override
-    public void update(Contact contact) {
+    public void update(MenuItem menuItem) {
         DB db = DB.getInstance();
         try {
-            String sql = "UPDATE Contact SET firstName=?, lastName=?, phoneNumber=? WHERE id=?";
+            String sql = "UPDATE MenuItem SET ItemName=?, ItemDescription=?, Price=? WHERE id=?";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setString(1, contact.getFirstName());
-            stmt.setString(2, contact.getLastName());
-            stmt.setString(3, contact.getPhoneNumber());
-            stmt.setInt(4, contact.getID());
+            stmt.setString(1, MenuItem.getItemName());
+            stmt.setString(2, MenuItem.getItemDescription());
+            stmt.setString(3, MenuItem.getPrice());
+            stmt.setInt(4, MenuItem.getID());
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("An existing contact was updated successfully!");
+                System.out.println("An existing MenuItem was updated successfully!");
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -119,19 +119,19 @@ public class ContactDAO implements DAO<Contact>
     }
     
     /**
-     * Delete a contact from contact table if the entity exists
-     * @param contact 
+     * Delete a MenuItem from MenuItem table if the entity exists
+     * @param MenuItem
      */
     @Override
-    public void delete(Contact contact) {
+    public void delete(MenuItem menuItem) {
         DB db = DB.getInstance();
         try {
-            String sql = "DELETE FROM Contact WHERE ID = ?";
+            String sql = "DELETE FROM MenuItem WHERE ID = ?";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setInt(1, contact.getID());
+            stmt.setInt(1, MenuItem.getID());
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("A contact was deleted successfully!");
+                System.out.println("A MenuItem was deleted successfully!");
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -148,7 +148,7 @@ public class ContactDAO implements DAO<Contact>
         ResultSet rs = null;
         List<String> headers = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM Contact WHERE ID = -1";//We just need this sql query to get the column headers
+            String sql = "SELECT * FROM MenuItem WHERE ID = -1";//We just need this sql query to get the column headers
             rs = db.executeQuery(sql);
             ResultSetMetaData rsmd = rs.getMetaData();
             //Get number of columns in the result set
