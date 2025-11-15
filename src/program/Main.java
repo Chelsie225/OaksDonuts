@@ -48,17 +48,17 @@ public class Main extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Addressbook CRUD");
+        setTitle("Oaks Donuts");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel1.setText("ID");
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel2.setText("First Name");
+        jLabel2.setText("Item Name");
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel3.setText("Last Name");
+        jLabel3.setText("Item Description");
         jLabel3.setToolTipText("");
 
         tblContacts.setModel(new javax.swing.table.DefaultTableModel(
@@ -66,7 +66,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "First Name", "Last Name", "Phone Number"
+                "ID", "Item Name", "Item Description", "Phone Number"
             }
         ) {
             boolean[] canEdit = new boolean [] {
