@@ -38,9 +38,9 @@ public class MenuItemDAO implements DAO<MenuItem>
             rs = stmt.executeQuery();
             MenuItem menuItem = null;
             while (rs.next()) {
-                MenuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
+                menuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
             }
-            return Optional.ofNullable(MenuItem);
+            return Optional.ofNullable(menuItem);
         } catch (SQLException ex) {
             System.err.println(ex.toString());
             return null;
@@ -61,8 +61,8 @@ public class MenuItemDAO implements DAO<MenuItem>
             rs = db.executeQuery(sql);
             MenuItem menuItem = null;
             while (rs.next()) {
-                MenuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
-                MenuItems.add(MenuItem);
+                menuItem = new MenuItem(rs.getInt("id"), rs.getString("itemname"), rs.getString("itemdescription"), rs.getDouble("price"));
+                MenuItems.add(menuItem);
             }
             return MenuItems;
         } catch (SQLException ex) {
@@ -73,7 +73,7 @@ public class MenuItemDAO implements DAO<MenuItem>
     
     /**
      * Insert a MenuItem object into MenuItem table
-     * @param MenuItem
+     * @param menuItem
      */
     @Override
     public void insert(MenuItem menuItem)
@@ -82,10 +82,10 @@ public class MenuItemDAO implements DAO<MenuItem>
         try {
             String sql = "INSERT INTO MenuItem(ID, itemName,itemdescription , price) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setInt(1, MenuItem.getID());
-            stmt.setString(2, MenuItem.getItemName());
-            stmt.setString(3, MenuItem.getItemDescription());
-            stmt.setString(4, MenuItem.getPrice());
+            stmt.setInt(1, menuItem.getID());
+            stmt.setString(2, menuItem.getItemName());
+            stmt.setString(3, menuItem.getItemDescription());
+            stmt.setDouble(4, menuItem.getPrice());
             int rowInserted = stmt.executeUpdate();
             if (rowInserted > 0) {
                 System.out.println("A new MenuItem was inserted successfully!");
@@ -97,7 +97,7 @@ public class MenuItemDAO implements DAO<MenuItem>
     
     /**
      * Update a MenuItem entity in database if it exists using a MenuItem object
-     * @param MenuItem
+     * @param menuItem
      */
     @Override
     public void update(MenuItem menuItem) {
@@ -105,10 +105,10 @@ public class MenuItemDAO implements DAO<MenuItem>
         try {
             String sql = "UPDATE MenuItem SET ItemName=?, ItemDescription=?, Price=? WHERE id=?";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setString(1, MenuItem.getItemName());
-            stmt.setString(2, MenuItem.getItemDescription());
-            stmt.setString(3, MenuItem.getPrice());
-            stmt.setInt(4, MenuItem.getID());
+            stmt.setString(1, menuItem.getItemName());
+            stmt.setString(2, menuItem.getItemDescription());
+            stmt.setDouble(3, menuItem.getPrice());
+            stmt.setInt(4, menuItem.getID());
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("An existing MenuItem was updated successfully!");
@@ -120,7 +120,7 @@ public class MenuItemDAO implements DAO<MenuItem>
     
     /**
      * Delete a MenuItem from MenuItem table if the entity exists
-     * @param MenuItem
+     * @param menuItem
      */
     @Override
     public void delete(MenuItem menuItem) {
@@ -128,7 +128,7 @@ public class MenuItemDAO implements DAO<MenuItem>
         try {
             String sql = "DELETE FROM MenuItem WHERE ID = ?";
             PreparedStatement stmt = db.getPreparedStatement(sql);
-            stmt.setInt(1, MenuItem.getID());
+            stmt.setInt(1, menuItem.getID());
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("A MenuItem was deleted successfully!");

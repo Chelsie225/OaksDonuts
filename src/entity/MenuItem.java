@@ -13,14 +13,14 @@ public class MenuItem
     private int ID;
     private String ItemName;
     private String ItemDescription;
-    private double price;
+    private double Price;
     
-    public MenuItem(int ID, String ItemName, String ItemDescription, double price)
+    public MenuItem(int ID, String ItemName, String ItemDescription, double Price)
     {
         this.ID = ID;
         this.ItemName = ItemName;
         this.ItemDescription = ItemDescription;
-        this.price = price;
+        this.Price = Price;
     }
 
     public int getID() {
@@ -35,12 +35,12 @@ public class MenuItem
         return ItemDescription;
     }
 
-    public double getprice() {
-        return price;
+    public double getPrice() {
+        return Price;
     }
 
     @Override
     public String toString() {
-        return "MenuItem{" + "ID=" + ID + ", ItemName=" + ItemName + ", ItemDescription=" + ItemDescription + ", price=" + price + '}';
+        return "MenuItem{" + "ID=" + ID + ", ItemName=" + ItemName + ", ItemDescription=" + ItemDescription + ", price=" + Price + '}';
     }
 }

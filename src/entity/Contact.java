@@ -19,8 +19,8 @@ public class Contact
     {
         this.ID = ID;
         this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.lastName =lastName;
+        this.phoneNumber= phoneNumber;
     }
 
     public int getID() {
