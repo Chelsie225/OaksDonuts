@@ -22,22 +22,26 @@ public class MenuItem
         this.ItemDescription = ItemDescription;
         this.Price = Price;
     }
-
+    //Getters and Setters
     public int getID() {
         return ID;
     }
+    public void setID(int ID) { this.ID = ID; }
 
     public String getItemName() {
         return  ItemName;
     }
+    public void setItemName(String name) { this.ItemName = ItemName; }
 
     public String getItemDescription() {
         return ItemDescription;
     }
+    public void setItemDescription(String description) { this.ItemDescription = ItemDescription; }
 
     public double getPrice() {
         return Price;
     }
+    public void setPrice(double price) { this.Price = Price; }
 
     @Override
     public String toString() {
