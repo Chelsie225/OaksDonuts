@@ -17,11 +17,11 @@ import java.util.Optional;
  * @author Gokhan
  */
 public class Main extends javax.swing.JFrame {
-    private static DAO contactDAO;
+    private static MenuItemDAO menuItemDAO;
 
     public Main() {
         initComponents();
-        refreshContactsTable();
+        refreshMenuItemsTable();
     }
 
     /**
@@ -36,15 +36,15 @@ public class Main extends javax.swing.JFrame {
         txtID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtFName = new javax.swing.JTextField();
-        txtLName = new javax.swing.JTextField();
+        txtItemName = new javax.swing.JTextField();
+        txtItemDescription = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblContacts = new javax.swing.JTable();
+        tblMenuItems = new javax.swing.JTable();
         btnInsert = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnDelete1 = new javax.swing.JButton();
-        txtPhoneNumber = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        txtPrice = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,7 +61,9 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setText("Item Description");
         jLabel3.setToolTipText("");
 
-        tblContacts.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel4.setText("Price");
+
+        tblMenuItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,304 +79,216 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblContacts.setCellSelectionEnabled(true);
-        tblContacts.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblMenuItems.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblContactsMouseClicked(evt);
+                tblMenuItemsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblContacts);
-        if (tblContacts.getColumnModel().getColumnCount() > 0) {
-            tblContacts.getColumnModel().getColumn(2).setResizable(false);
-        }
+        jScrollPane1.setViewportView(tblMenuItems);
 
         btnInsert.setText("Save");
-        btnInsert.setActionCommand("Insert");
-        btnInsert.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnInsert.setIconTextGap(0);
-        btnInsert.setInheritsPopupMenu(true);
-        btnInsert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertActionPerformed(evt);
-            }
-        });
+        btnInsert.addActionListener(evt -> btnInsertActionPerformed(evt));
 
         btnUpdate.setText("Update");
-        btnUpdate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
+        btnUpdate.addActionListener(evt -> btnUpdateActionPerformed(evt));
 
-        btnDelete1.setText("Delete");
-        btnDelete1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnDelete1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDelete1ActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel4.setText("Phone Number");
-        jLabel4.setToolTipText("");
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(evt -> btnDeleteActionPerformed(evt));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtItemDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnInsert))
+                                                .addGap(10, 10, 10)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnUpdate))
+                                                .addGap(10, 10, 10)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel3)
+                                                        .addComponent(txtItemDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnDelete))
+                                                .addGap(10, 10, 10)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 0, Short.MAX_VALUE))))
         );
-
-        jLabel3.getAccessibleContext().setAccessibleName("ID");
-        btnInsert.getAccessibleContext().setAccessibleName("Insert");
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        // TODO add your handling code here:
-        
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {
         if (!txtID.getText().isEmpty()) {
-            int ID = Integer.parseInt(txtID.getText().trim());
-            String fName = txtFName.getText().trim();
-            String lName = txtLName.getText().trim();
-            String phoneNumber = txtPhoneNumber.getText().trim();
-            addContact(ID, fName, lName, phoneNumber);
-            refreshContactsTable();
-            clearTextFields();
-        }
-        else
-        {
+            try {
+                int ID = Integer.parseInt(txtID.getText().trim());
+                String name = txtItemName.getText().trim();
+                String desc = txtItemDescription.getText().trim();
+                double price = Double.parseDouble(txtPrice.getText().trim());
+                addMenuItem(ID, name, desc, price);
+                refreshMenuItemsTable();
+                clearTextFields();
+            } catch (NumberFormatException e) {
+                alert("Invalid number format for ID or Price", "Insert error");
+            }
+        } else {
             alert("ID cannot be empty", "Insert error");
         }
-    }//GEN-LAST:event_btnInsertActionPerformed
+    }
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {
         if (!txtID.getText().isEmpty()) {
-            int ID = Integer.parseInt(txtID.getText().trim());
-            String fName = txtFName.getText().trim();
-            String lName = txtLName.getText().trim();
-            String phoneNumber = txtPhoneNumber.getText().trim();
-            Contact contact = getContact(ID);
-            if(contact.getID() != -1) {
-                updateContact(ID, fName, lName, phoneNumber);
-                refreshContactsTable();
+            try {
+                int ID = Integer.parseInt(txtID.getText().trim());
+                String name = txtItemName.getText().trim();
+                String desc = txtItemDescription.getText().trim();
+                double price = Double.parseDouble(txtPrice.getText().trim());
+                MenuItem menuItem = getMenuItem(ID);
+                if (menuItem.getID() != -1) {
+                    updateMenuItem(ID, name, desc, price);
+                    refreshMenuItemsTable();
+                } else {
+                    alert("Menu Item does not exist", "Update error");
+                }
+            } catch (NumberFormatException e) {
+                alert("Invalid number format for ID or Price", "Update error");
             }
-            else
-            {
-                alert("Menu Item does not exist", "Update error");
-            }
-        }
-        else
-        {
+        } else {
             alert("ID cannot be empty", "Update error");
         }
-    }//GEN-LAST:event_btnUpdateActionPerformed
+    }
 
-    //set the values of a row to the textfields
-    private void tblContactsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblContactsMouseClicked
-        // TODO add your handling code here:
-        int i = tblContacts.getSelectedRow();
-        TableModel model = tblContacts.getModel();
-        txtID.setText(model.getValueAt(i, 0).toString());
-        txtFName.setText(model.getValueAt(i, 1).toString());
-        txtLName.setText(model.getValueAt(i, 2).toString());
-        txtPhoneNumber.setText(model.getValueAt(i, 3).toString());
-    }//GEN-LAST:event_tblContactsMouseClicked
-
-    //handles delete button action
-    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
-        // TODO add your handling code here:
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
         if (!txtID.getText().isEmpty()) {
-            int ID = Integer.parseInt(txtID.getText().trim());
-            String fName = txtFName.getText().trim();
-            String lName = txtLName.getText().trim();
-            String phoneNumber = txtPhoneNumber.getText().trim();
-            Contact contact = getContact(ID);
-            if(contact.getID() != -1) {
-                int option = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to Delete?", "Delete confirmation", JOptionPane.YES_NO_OPTION);
-                if(option == 0) {
-                    deleteContact(ID, fName, lName, phoneNumber);
-                    refreshContactsTable();
-                    clearTextFields();
+            try {
+                int ID = Integer.parseInt(txtID.getText().trim());
+                MenuItem menuItem = getMenuItem(ID);
+                if (menuItem.getID() != -1) {
+                    int option = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete?", "Delete confirmation", JOptionPane.YES_NO_OPTION);
+                    if (option == 0) {
+                        deleteMenuItem(ID);
+                        refreshMenuItemsTable();
+                        clearTextFields();
+                    }
+                } else {
+                    alert("Menu Item does not exist", "Delete error");
                 }
+            } catch (NumberFormatException e) {
+                alert("Invalid number format for ID", "Delete error");
             }
-            else
-            {
-                alert("Contact does not exist", "Delete error");
-            }
-        }
-        else
-        {
+        } else {
             alert("ID cannot be empty", "Delete error");
         }
-    }//GEN-LAST:event_btnDelete1ActionPerformed
+    }
 
-    //method to show an info alert
+    private void tblMenuItemsMouseClicked(java.awt.event.MouseEvent evt) {
+        int i = tblMenuItems.getSelectedRow();
+        TableModel model = tblMenuItems.getModel();
+        txtID.setText(model.getValueAt(i, 0).toString());
+        txtItemName.setText(model.getValueAt(i, 1).toString());
+        txtItemDescription.setText(model.getValueAt(i, 2).toString());
+        txtPrice.setText(model.getValueAt(i, 3).toString());
+    }
+
     public void alert(String msg) {
         JOptionPane.showMessageDialog(rootPane, msg);
     }
 
-    //method to show an error alert
     public void alert(String msg, String title) {
         JOptionPane.showMessageDialog(rootPane, msg, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    private static void addContact(int id, String firstName, String lastName, String phoneNumber) {
-        Contact contact;
-        contact = new Contact(id, firstName, lastName, phoneNumber);
-        contactDAO.insert(contact);
+    private static void addMenuItem(int id, String name, String desc, double price) {
+        MenuItem menuItem = new MenuItem(id, name, desc, price);
+        menuItemDAO.insert(menuItem);
     }
-    
-    private static void updateContact(int id, String firstName, String lastName, String phoneNumber) {
-        Contact contact;
-        contact = new Contact(id, firstName, lastName, phoneNumber);
-        contactDAO.update(contact);
+
+    private static void updateMenuItem(int id, String name, String desc, double price) {
+        MenuItem menuItem = new MenuItem(id, name, desc, price);
+        menuItemDAO.update(menuItem);
     }
-    
-    private static void deleteContact(int id, String firstName, String lastName, String phoneNumber) {
-        Contact contact;
-        contact = new Contact(id, firstName, lastName, phoneNumber);
-        contactDAO.delete(contact);
+
+    private static void deleteMenuItem(int id) {
+        MenuItem menuItem = new MenuItem(id, "", "", 0.0);
+        menuItem.setID(id);
+        menuItemDAO.delete(menuItem);
     }
-    
-    static Contact getContact(int id) {
-        Optional<Contact> contact = contactDAO.get(id);
-        return contact.orElseGet(() -> new Contact(-1, "Non-exist", "Non-exist", "Non-exist"));
+
+    private static MenuItem getMenuItem(int id) {
+        Optional<MenuItem> menuItem = menuItemDAO.get(id);
+        return menuItem.orElseGet(() -> new MenuItem(-1, "Non-exist", "Non-exist", 0.0));
     }
-    
-    //method to clear the txt fields
+
     private void clearTextFields() {
         txtID.setText("");
-        txtFName.setText("");
-        txtLName.setText("");
-        txtPhoneNumber.setText("");
+        txtItemName.setText("");
+        txtItemDescription.setText("");
+        txtPrice.setText("");
     }
 
-    //fetch 
-    private void refreshContactsTable() {
-        List<Contact> contacts = contactDAO.getAll();
-        DefaultTableModel model = (DefaultTableModel) tblContacts.getModel();
-        //Clear all items in tblContacts
-        for(int i = model.getRowCount() - 1; i >= 0; i-- ) {
+    private void refreshMenuItemsTable() {
+        List<MenuItem> items = menuItemDAO.getAll();
+        DefaultTableModel model = (DefaultTableModel) tblMenuItems.getModel();
+        // Clear table
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
             model.removeRow(i);
         }
-        for (Contact contact : contacts) {
-                Object[] row = new Object[4];
-                row[0] = contact.getID();
-                row[1] = contact.getFirstName();
-                row[2] = contact.getLastName();
-                row[3] = contact.getPhoneNumber();
-                model.addRow(row);
+        for (MenuItem item : items) {
+            Object[] row = new Object[4];
+            row[0] = item.getID();
+            row[1] = item.getItemName();
+            row[2] = item.getItemDescription();
+            row[3] = item.getPrice();
+            model.addRow(row);
         }
     }
-    
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
-        contactDAO = new ContactDAO();
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Main().setVisible(true);
-        });
+        menuItemDAO = new MenuItemDAO();
+        java.awt.EventQueue.invokeLater(() -> new Main().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete1;
+    // Variables
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel1, jLabel2, jLabel3, jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblContacts;
-    private javax.swing.JTextField txtFName;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtLName;
-    private javax.swing.JTextField txtPhoneNumber;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JTable tblMenuItems;
+    private javax.swing.JTextField txtID, txtItemName, txtItemDescription, txtPrice;
 }

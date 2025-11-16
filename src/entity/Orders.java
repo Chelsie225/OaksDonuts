@@ -8,7 +8,8 @@ public class Orders {
     private String customerName;
     private Timestamp orderDate;
 
-    public Orders() {}
+    public Orders() {
+    }
 
     public Orders(int orderId, String customerName, Timestamp orderDate) {
         this.orderId = orderId;
@@ -39,3 +40,5 @@ public class Orders {
 
     public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
+    }
+}

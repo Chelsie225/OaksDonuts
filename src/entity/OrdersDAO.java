@@ -10,19 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * OrdersDAO.java
- * Handles CRUD operations for Orders model
- */
+
 public class OrdersDAO implements DAO<Orders> {
 
     public OrdersDAO() {}
 
     List<Orders> ordersList;
 
-    /**
-     * Get a single Orders by ID
-     */
+
     @Override
     public Optional<Orders> get(int id) {
         DB db = DB.getInstance();
@@ -80,9 +75,7 @@ public class OrdersDAO implements DAO<Orders> {
         }
     }
 
-    /**
-     * Insert a new Orders record
-     */
+
     @Override
     public void insert(Orders order) {
         DB db = DB.getInstance();
