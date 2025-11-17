@@ -9,6 +9,7 @@ public class OrderItems {
     private int quantity;
     private double linePrice;
 
+
     public OrderItems() {}
 
     public OrderItems(MenuItem menuItem, int quantity) {

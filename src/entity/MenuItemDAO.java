@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
 /**
  * contact
  * @author Gokhan
@@ -162,4 +163,5 @@ public class MenuItemDAO implements DAO<MenuItem>
             return null;
         } 
     }
+
 }

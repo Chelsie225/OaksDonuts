@@ -24,29 +24,41 @@ public class MenuItem
         this.ItemDescription = ItemDescription;
         this.Price = Price;
     }
-    //Getters and Setters
+    // Getters and Setters
     public int getID() {
         return ID;
     }
-    public void setID(int ID) { this.ID = ID; }
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getItemName() {
-        return  ItemName;
+        return ItemName;
     }
-    public void setItemName(String name) { this.ItemName = ItemName; }
+    public void setItemName(String ItemName) {
+        this.ItemName = ItemName;   // FIXED
+    }
 
     public String getItemDescription() {
         return ItemDescription;
     }
-    public void setItemDescription(String description) { this.ItemDescription = ItemDescription; }
+    public void setItemDescription(String ItemDescription) {
+        this.ItemDescription = ItemDescription;  // FIXED
+    }
 
     public double getPrice() {
         return Price;
     }
-    public void setPrice(double price) { this.Price = Price; }
+    public void setPrice(double Price) {
+        this.Price = Price;   // FIXED
+    }
 
     @Override
     public String toString() {
-        return "MenuItem{" + "ID=" + ID + ", ItemName=" + ItemName + ", ItemDescription=" + ItemDescription + ", price=" + Price + '}';
+        return "MenuItem{" +
+                "ID=" + ID +
+                ", ItemName='" + ItemName + '\'' +
+                ", ItemDescription='" + ItemDescription + '\'' +
+                ", Price=" + Price + '}';
     }
 }
