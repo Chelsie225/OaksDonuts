@@ -21,3 +21,5 @@ CREATE TABLE OrderItem (
     FOREIGN KEY (orderid) REFERENCES Orders(orderid),
     FOREIGN KEY (menuitemid) REFERENCES MenuItem(id)
 );
+
+
